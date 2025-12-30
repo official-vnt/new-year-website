@@ -27,9 +27,16 @@
             position: relative;
             z-index: 10;
         }
-        h1 { color: #d63384; margin-bottom: 15px; }
+        h1 { color: #d63384; margin-bottom: 15px; font-family:cursive;}
         .gif-container img { width: 200px; border-radius: 15px; }
         .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+
+        h2 { color: #000000; margin-bottom: 15px; font-family: cursive;
+        }
+
+        h3 { color:rgb(0, 0, 0); margin-bottom: 10px; font-family: cursive;
+        }
+        
         
         button {
             padding: 12px 25px;
@@ -44,23 +51,46 @@
         .hidden { display: none; }
 
         /* Heart Countdown */
+       /* Positioning the rounded parts of the heart */
+.heart:before { top: -50px; left: 0; }
+.heart:after { left: 50px; top: 0; }
+
+/* Centering the number inside the heart */
+#countdownNumber {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Flexbox to center the content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Rotate it back 45deg so the number is upright */
+    transform: rotate(0deg); 
+    font-family: cursive;
+    font-size: 50px; /* Reduced slightly to fit better */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    z-index: 1; /* Ensures it stays on top of the pseudo-elements */
+}
+        
+        
         .heart-wrapper { display: flex; justify-content: center; align-items: center; height: 180px; }
         .heart {
             background-color: #ff4d6d; height: 100px; width: 100px;
             position: relative; transform: rotate(-45deg);
             animation: pulse 0.8s infinite;
         }
+
         .heart:before, .heart:after {
             content: ""; background-color: #ff4d6d; border-radius: 50%;
             height: 100px; position: absolute; width: 100px;
         }
-        .heart:before { top: -50px; left: 0; }
-        .heart:after { left: 50px; top: 0; }
-        #countdownNumber {
-            position: absolute; transform: rotate(45deg);
-            top: 20px; left: 30px; font-size: 40px;
-            color: white; font-weight: bold;
-        }
+        
+
 
         /* Video Styling */
         .video-frame {
@@ -106,13 +136,21 @@
         <div id="countdownSection" class="hidden">
             <h1>Wait for it...</h1>
             <div class="heart-wrapper">
-                <div class="heart"><div id="countdownNumber">10</div></div>
+                <div class="heart">
+                    </div>
+                    <div id="countdownNumber">
+                        5
+                    </div>
+                
             </div>
-            <p>Something special for BUBU... 😍</p>
+            <p><h3>Something special for BUBU... 😍</h3></p>
         </div>
 
         <div id="giftAskSection" class="hidden">
-            <h1>Happy New Year, My Love! 🎆</h1>
+            <h1>Happy New Year, My Love ❤️</h1>
+            <h2>
+            As this new year begins, I just want you to know that you are my favorite part of every year, every day, and every moment. <br> Thank you for filling my life with love, smiles, and warmth. <br> I’m so excited to make new memories with you, hold your hand through every high and low, and love you even more with each passing day. <br> <br>
+         Here’s to another year of us, of laughter, dreams, and endless love.<br>I’m so grateful to have you. 💫💕</h2>
             <div class="gif-container"><img src="2.gif" alt="Happy"></div>
             <h2 style="color: #d63384; margin-top: 20px;">Wanna see your new year gift, baby girl? 🎁</h2>
             <button id="giftBtn" onclick="showFinalGift()">YES, SHOW ME! ✨</button>
@@ -150,7 +188,7 @@
         function startCountdown() {
             document.getElementById('questionSection').classList.add('hidden');
             document.getElementById('countdownSection').classList.remove('hidden');
-            let timeLeft = 10;
+            let timeLeft = 5;
             const timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('countdownNumber').innerText = timeLeft;
