@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Bubu ❤️</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffeef8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            transition: background-color 0.8s;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            max-width: 550px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+        h1 { color: #d63384; margin-bottom: 15px; }
+        .gif-container img { width: 200px; border-radius: 15px; }
+        .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #yesBtn, #giftBtn { background-color: #ff4d6d; color: white; font-weight: bold; }
+        #noBtn { background-color: #6c757d; color: white; }
+        .hidden { display: none; }
+
+        /* Heart Countdown */
+        .heart-wrapper { display: flex; justify-content: center; align-items: center; height: 180px; }
+        .heart {
+            background-color: #ff4d6d; height: 100px; width: 100px;
+            position: relative; transform: rotate(-45deg);
+            animation: pulse 0.8s infinite;
+        }
+        .heart:before, .heart:after {
+            content: ""; background-color: #ff4d6d; border-radius: 50%;
+            height: 100px; position: absolute; width: 100px;
+        }
+        .heart:before { top: -50px; left: 0; }
+        .heart:after { left: 50px; top: 0; }
+        #countdownNumber {
+            position: absolute; transform: rotate(45deg);
+            top: 20px; left: 30px; font-size: 40px;
+            color: white; font-weight: bold;
+        }
+
+        /* Video Styling */
+        .video-frame {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+            border: 5px solid #ffb3c1;
+            margin: 20px auto;
+            max-width: 100%;
+            display: inline-block;
+        }
+        video {
+            border-radius: 10px;
+            width: 100%;
+            max-height: 400px; /* Adjusted for 1440x1080 ratio */
+            outline: none;
+        }
+
+        /* Background Decorations */
+        .flower { position: absolute; font-size: 30px; animation: float 6s linear infinite; opacity: 0.7; z-index: 1; }
+
+        @keyframes pulse {
+            0%, 100% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.15); }
+        }
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div class="container" id="mainContainer">
+        <div id="questionSection">
+            <h1 id="questionText">Do you love me? ❤️</h1>
+            <div class="gif-container"><img id="pandaGif" src="1.gif" alt="Asking"></div>
+            <div class="buttons">
+                <button id="yesBtn" onclick="startCountdown()">Yes!</button>
+                <button id="noBtn" onclick="sayNo()">No</button>
+            </div>
+        </div>
+
+        <div id="countdownSection" class="hidden">
+            <h1>Wait for it...</h1>
+            <div class="heart-wrapper">
+                <div class="heart"><div id="countdownNumber">10</div></div>
+            </div>
+            <p>Something special for BUBU... 😍</p>
+        </div>
+
+        <div id="giftAskSection" class="hidden">
+            <h1>Happy New Year, My Love! 🎆</h1>
+            <div class="gif-container"><img src="2.gif" alt="Happy"></div>
+            <h2 style="color: #d63384; margin-top: 20px;">Wanna see your new year gift, baby girl? 🎁</h2>
+            <button id="giftBtn" onclick="showFinalGift()">YES, SHOW ME! ✨</button>
+        </div>
+
+        <div id="finalGiftPage" class="hidden">
+            <h1 style="font-size: 2em; margin-bottom: 5px;">🌸 For My Baby Girl 🌸</h1>
+            <p style="color: #d63384; font-weight: bold;">Happy New Year 2026!</p>
+            
+            <div class="video-frame">
+                <video id="giftVideo" controls controlsList="nodownload" disablePictureInPicture>
+                    <source src="gift.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <h2 style="color: #ff4d6d; margin-top: 10px;">A Lifetime of Hugs & <br>A Date at Hotel Shauryawada! 🍲</h2>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const phrases = ["No", "Are you sure? \n I know you LOVE ME BUBU", "You're telling a lie! \n YOU LOVE ME", "Think again...", "YOU LOVE ME 😭", "YOU LOVE ME!"];
+        
+        function sayNo() {
+            noCount++;
+            document.getElementById('questionText').innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            document.getElementById('pandaGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXFqYnJqZzRycXp3eXp3eXp3eXp3eXp3eXp3eXp3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Y5BbDSkSTiY8/giphy.gif";
+            const yesBtn = document.getElementById('yesBtn');
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize * 1.2) + 'px';
+            yesBtn.style.padding = (currentSize * 0.7) + 'px ' + (currentSize * 1.2) + 'px';
+        }
+
+        function startCountdown() {
+            document.getElementById('questionSection').classList.add('hidden');
+            document.getElementById('countdownSection').classList.remove('hidden');
+            let timeLeft = 10;
+            const timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdownNumber').innerText = timeLeft;
+                if (timeLeft <= 0) { clearInterval(timer); showGiftAsk(); }
+            }, 1000);
+        }
+
+        function showGiftAsk() {
+            document.getElementById('countdownSection').classList.add('hidden');
+            document.getElementById('giftAskSection').classList.remove('hidden');
+        }
+
+        function showFinalGift() {
+            document.getElementById('giftAskSection').classList.add('hidden');
+            document.getElementById('finalGiftPage').classList.remove('hidden');
+            document.body.style.backgroundColor = "#ffc1d6";
+            createFlowers();
+            // Optional: Auto-play the video
+            const video = document.getElementById('giftVideo');
+            video.play();
+        }
+
+        function createFlowers() {
+            const flowers = ['🌸', '💖', '🌼', '🌷', '✨'];
+            for (let i = 0; i < 35; i++) {
+                let flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                flower.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                document.body.appendChild(flower);
+            }
+        }
+    </script>
+</body>
+</html>
