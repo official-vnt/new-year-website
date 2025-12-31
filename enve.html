@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Metallic Envelopes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Parisienne&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            /* Premium Metallic Palettes */
+            /* Metallic Red Gradient Variables */
+            --env-light--red: #e65c5c;
+            --env-mid--red: #d14d4d;
+            --env-dark--red: #8b2d2d;
+            --wax-color--red: #961e1e;
+
+            --env-light--blue: #5cb3e6;
+            --env-mid--blue: #4d88d1;
+            --env-dark--blue: #2d518b;
+            --wax-color--blue: #1e4c96;
+            
+            --env-light--yellow: #e6db5c;
+            --env-mid--yellow: #d1ca4d;
+            --env-dark--yellow: #8b782d;
+            --wax-color--yellow: #967e1e;
+        
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+        }
+
+        .letter-wrapper {
+            position: absolute;
+            width: 350px;
+            height: 230px;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1;
+        }
+
+        /* --- 3D POSITIONS --- */
+        .active {
+            transform: translate3d(0, 0, 150px);
+            z-index: 10;
+            filter: brightness(1.1) drop-shadow(0 30px 50px rgba(0,0,0,0.3));
+        }
+
+        .left {
+            transform: translate3d(-380px, 20px, -150px) rotateY(25deg);
+            z-index: 5;
+            filter: brightness(0.6) blur(1px);
+        }
+
+        .right {
+            transform: translate3d(380px, 20px, -150px) rotateY(-25deg);
+            z-index: 5;
+            filter: brightness(0.6) blur(1px);
+        }
+
+        .open.active {
+            transform: translate3d(0, 120px, 150px);
+        }
+
+        /* --- METALLIC ENVELOPE DETAILS --- */
+         .envelope-back-red {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--env-dark), var(--env-mid), var(--env-dark));
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.4);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .envelope-back-blue {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--env-dark), var(--env-mid), var(--env-dark));
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.4);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .envelope-back-yellow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--env-dark), var(--env-mid), var(--env-dark));
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.4);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        /* Metallic Front Pocket Red*/
+        .envelope-front-red {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, var(--env-light--red) 0%, var(--env-mid--red) 50%, var(--env-dark--red) 100%);
+            clip-path: polygon(0 , 50% 75%, 100% 35%, 100% 100%, 0 100%);
+            z-index: 3;
+        }
+
+        .envelope-front-blue {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, var(--env-light--blue) 0%, var(--env-mid--blue) 50%, var(--env-dark--blue) 100%);
+            clip-path: polygon(0 , 50% 75%, 100% 35%, 100% 100%, 0 100%);
+            z-index: 3;
+        }
+
+        .envelope-front-yellow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, var(--env-light--yellow) 0%, var(--env-mid--yellow) 50%, var(--env-dark--yellow) 100%);
+            clip-path: polygon(0 , 50% 75%, 100% 35%, 100% 100%, 0 100%);
+            z-index: 3;
+        }
+
+        /* Metallic Top Flap Red*/
+        .flap-red {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-135deg, var(--env-light--red), var(--env-mid--red), var(--env-dark--red)); 
+            clip-path: polygon(0 0, 50% 55%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.6s;
+            z-index: 5;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .flap-blue {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-135deg, var(--env-light--blue), var(--env-mid--blue), var(--env-dark--blue)); 
+            clip-path: polygon(0 0, 50% 55%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.6s;
+            z-index: 5;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .flap-yellow {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-135deg, var(--env-light--yellow), var(--env-mid--yellow), var(--env-dark--yellow)); 
+            clip-path: polygon(0 0, 50% 55%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.6s;
+            z-index: 5;
+            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        /* applying metals remaing*/
+
+        /* 3D Wax Seal */
+        .kiss-seal {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #c43a3a, var(--wax-color--red));
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.3);
+            transition: opacity 0.4s ease;
+        }
+
+        .eveil-eye {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #3a91c4, var(--wax-color--blue));
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.3);
+            transition: opacity 0.4s ease;
+        }
+
+        .sunflower {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #c4bd3a, var(--wax-color--yellow));
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.3);
+            transition: opacity 0.4s ease;
+        }
+
+        /* The Photo Frame (Replacing the paper) */
+        .photo-container-red {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 320px;
+            height: 200px;
+            background: white; /* Polaroid style border */
+            padding: 10px 10px 40px 10px; /* Thicker bottom for that Polaroid look */
+            box-sizing: border-box;
+            transition: transform 0.4s ease-in-out, height 0.4s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .photo-container-red img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the space without stretching */
+            border: 1px solid #ddd;
+        }
+
+        .photo-container-blue {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 320px;
+            height: 200px;
+            background: white; /* Polaroid style border */
+            padding: 10px 10px 40px 10px; /* Thicker bottom for that Polaroid look */
+            box-sizing: border-box;
+            transition: transform 0.4s ease-in-out, height 0.4s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .photo-container-blue img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the space without stretching */
+            border: 1px solid #ddd;
+        }
+
+        .photo-container-yellow {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 320px;
+            height: 200px;
+            background: white; /* Polaroid style border */
+            padding: 10px 10px 40px 10px; /* Thicker bottom for that Polaroid look */
+            box-sizing: border-box;
+            transition: transform 0.4s ease-in-out, height 0.4s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .photo-container-yellow img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the space without stretching */
+            border: 1px solid #ddd;
+        }
+
+        /* Hover Interactions */
+        .letter-wrapper.open .flap-red {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter-wrapper.open .flap-blue {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter-wrapper.open .flap-yellow {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .letter-wrapper.open .eveil-eye {
+            opacity: 0;
+        }
+
+        .letter-wrapper.open .kiss-seal {
+            opacity: 0;
+        }
+
+        .letter-wrapper.open .sunflower {
+            opacity: 0;
+        }
+
+        .open .photo-container-red {
+            transform: translateY(-220px) rotate(-3deg); /* Slight tilt for effect */
+            height: 380px;
+            z-index: 6;
+        }
+
+        .open .photo-container-blue {
+            transform: translateY(-220px) rotate(-3deg); /* Slight tilt for effect */
+            height: 380px;
+            z-index: 6;
+        }
+
+        .open .photo-container-yellow {
+            transform: translateY(-220px) rotate(-3deg); /* Slight tilt for effect */
+            height: 380px;
+            z-index: 6;
+        }
+        /* Style for the buttons inside the photos */
+.visit-btn {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 15px;
+    font-size: 14px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s;
+    font-family: 'Dancing Script', cursive;
+}
+
+.visit-btn:hover {
+    background: #000;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.open .photo-container-red, 
+.open .photo-container-blue, 
+.open .photo-container-yellow {
+    transform: translateY(-220px) rotate(-3deg);
+    height: 380px;
+    z-index: 20; /* Increased to ensure button is on top */
+}
+
+
+
+/* Ensure caption doesn't overlap button */
+    .caption {
+    font-size: 16px;
+    margin-top: 5px;
+    color: #444;
+    }
+        
+        /* CONTROLS */
+        .controls { margin-top: 40px; display: flex; gap: 30px; z-index: 100; }
+        button {
+            padding: 15px 40px; border: none; background: #333; color: white;
+            font-family: 'Dancing Script', cursive; font-size: 22px;
+            border-radius: 50px; cursor: pointer; transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        button:hover { background: #000; transform: translateY(-5px); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="carousel-container">
+        <div class="letter-wrapper env-red active" id="env0">
+            <div class="kiss-seal">💋</div>
+            <div class="flap-red"></div>
+            <div class="envelope-back-red"></div>
+            <div class="envelope-front-red"></div>
+            <div class="photo-container-red">
+                <img src="1.jpeg" alt="Our Special Memory">
+                <div class="caption">The Crimson Memory</div>
+                <button class="visit-btn" onclick="window.location.href='1.html'">Click to Open ❤️</button>
+            </div>
+        </div>
+
+        <div class="letter-wrapper env-blue active" id="env1">
+            <div class="eveil-eye">🧿</div>
+            <div class="flap-blue"></div>
+            <div class="envelope-back-blue"></div>
+            <div class="envelope-front-blue"></div>
+            <div class="photo-container-blue">
+                <img src="1.jpeg" alt="Our Special Memory">
+                <button class="visit-btn" onclick="window.location.href='1.html'">Click to Open ❤️</button>
+                <div class="caption">The Crimson Memory</div>
+            </div>
+        </div>
+        
+        <div class="letter-wrapper env-yellow active" id="env2">
+            <div class="sunflower">🌻</div>
+            <div class="flap-yellow"></div>
+            <div class="envelope-back-yellow"></div>
+            <div class="envelope-front-yellow"></div>
+            <div class="photo-container-yellow">
+                <img src="1.jpeg" alt="Our Special Memory">
+                <button class="visit-btn" onclick="window.location.href='1.html'">Click to Open ❤️</button>
+                <div class="caption">The Crimson Memory</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="rotate(-1)">Previous</button>
+        <button onclick="toggleOpen()" id="openBtn">Open</button>
+        <button onclick="rotate(1)">Next</button>
+    </div>
+
+    <script>
+        let currentActive = 0;
+        const envs = [
+        document.getElementById('env0'), 
+        document.getElementById('env1'), 
+        document.getElementById('env2')
+        ];
+        const openBtn = document.getElementById('openBtn');
+
+        function rotate(step) {
+            envs.forEach(e => e.classList.remove('open'));
+            openBtn.innerText = "Open";
+
+            currentActive = (currentActive + step + 3) % 3;
+            const leftIdx = (currentActive - 1 + 3) % 3;
+            const rightIdx = (currentActive + 1) % 3;
+
+            envs.forEach((env, i) => {
+                env.classList.remove('active', 'left', 'right');
+                if (i === currentActive) env.classList.add('active');
+                else if (i === leftIdx) env.classList.add('left');
+                else if (i === rightIdx) env.classList.add('right');
+            });
+        }
+
+        function toggleOpen() {
+            const activeEnv = envs[currentActive];
+            activeEnv.classList.toggle('open');
+            openBtn.innerText = activeEnv.classList.contains('open') ? "Close" : "Open";
+        }
+    </script>
+</body>
+</html>

@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Bubu ❤️</title>
     <style>
+        /* 🎨 EDIT COLORS HERE */
+        :root {
+            --main-bg: #ffeef8;         /* Background color of the page */
+            --card-bg: rgba(255, 255, 255, 0.95); /* Container background */
+            --primary-pink: #ff4d6d;    /* Main button & heart color */
+            --text-color: #d63384;      /* Heading color */
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffeef8;
+            background-color: var(--main-bg);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,7 +26,7 @@
             transition: background-color 0.8s;
         }
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 30px;
             box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
@@ -27,16 +35,11 @@
             position: relative;
             z-index: 10;
         }
-        h1 { color: #d63384; margin-bottom: 15px;}
+        h1 { color: var(--text-color); margin-bottom: 15px;}
         .gif-container img { width: 200px; border-radius: 15px; }
         .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-
-        h2 { color: #000000; margin-bottom: 5px ; font-size: 15px; 
-        }
-
-        h3 { color:rgb(0, 0, 0); margin-bottom: 10px; 
-        }
-        
+        h2 { color: #000000; margin-bottom: 5px ; font-size: 15px; }
+        h3 { color:rgb(0, 0, 0); margin-bottom: 10px; }
         
         button {
             padding: 12px 25px;
@@ -46,53 +49,33 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        #yesBtn, #giftBtn { background-color: #ff4d6d; color: white; font-weight: bold; }
+        /* Buttons Color */
+        #yesBtn, #giftBtn, #nextGiftBtn { background-color: var(--primary-pink); color: white; font-weight: bold; }
         #noBtn { background-color: #6c757d; color: white; }
         .hidden { display: none; }
 
-        /* Heart Countdown */
-       /* Positioning the rounded parts of the heart */
-    .heart:before { top: -50px; left: 0; }
-    .heart:after { left: 50px; top: 0; }
-
-/* Centering the number inside the heart */
-#countdownNumber {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    
-    /* Flexbox to center the content */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* Rotate it back 45deg so the number is upright */
-    transform: rotate(0deg); 
-    font-family: cursive;
-    font-size: 50px; /* Reduced slightly to fit better */
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    z-index: 1; /* Ensures it stays on top of the pseudo-elements */
-}
-        
-        
+        /* Heart Countdown Styles */
         .heart-wrapper { display: flex; justify-content: center; align-items: center; height: 180px; }
         .heart {
-            background-color: #ff4d6d; height: 100px; width: 100px;
+            background-color: var(--primary-pink); height: 100px; width: 100px;
             position: relative; transform: rotate(-45deg);
             animation: pulse 0.8s infinite;
         }
-
         .heart:before, .heart:after {
-            content: ""; background-color: #ff4d6d; border-radius: 50%;
+            content: ""; background-color: var(--primary-pink); border-radius: 50%;
             height: 100px; position: absolute; width: 100px;
         }
-        
+        .heart:before { top: -50px; left: 0; }
+        .heart:after { left: 50px; top: 0; }
 
+        #countdownNumber {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            transform: rotate(0deg); font-family: cursive;
+            font-size: 50px; color: white; font-weight: bold; z-index: 1;
+        }
 
-        /* Video Styling */
+        /* Video Frame Styling */
         .video-frame {
             background: white;
             padding: 15px;
@@ -103,14 +86,8 @@
             max-width: 100%;
             display: inline-block;
         }
-        video {
-            border-radius: 10px;
-            width: 100%;
-            max-height: 400px; /* Adjusted for 1440x1080 ratio */
-            outline: none;
-        }
+        video { border-radius: 10px; width: 100%; max-height: 400px; outline: none; }
 
-        /* Background Decorations */
         .flower { position: absolute; font-size: 30px; animation: float 6s linear infinite; opacity: 0.7; z-index: 1; }
 
         @keyframes pulse {
@@ -123,10 +100,14 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;"> <div class="container" id="mainContainer">
+<body oncontextmenu="return false;"> 
+    
+    <div class="container" id="mainContainer">
         <div id="questionSection">
             <h1 id="questionText">Do you love me? ❤️</h1>
-            <div class="gif-container"><img id="pandaGif" src="1.gif" alt="Asking"></div>
+            <div class="gif-container">
+                <img id="pandaGif" src="1.gif" alt="Asking">
+            </div>
             <div class="buttons">
                 <button id="yesBtn" onclick="startCountdown()">Yes!</button>
                 <button id="noBtn" onclick="sayNo()">No</button>
@@ -136,60 +117,63 @@
         <div id="countdownSection" class="hidden">
             <h1>Wait for it...</h1>
             <div class="heart-wrapper">
-                <div class="heart">
-                    </div>
-                    <div id="countdownNumber">
-                        5
-                    </div>
-                
+                <div class="heart"></div>
+                <div id="countdownNumber">5</div>
             </div>
-            <p><h3>Something special for BUBU... 😍</h3></p>
+            <h3>Something special for BUBU... 😍</h3>
         </div>
 
         <div id="giftAskSection" class="hidden">
             <h1>Happy New Year, My Love ❤️</h1>
-            <h2>
-           You’re my favorite part of every year, every day, every moment.<br>
-            Thank you for filling my life with love, warmth, and smiles.<br>
-            Here’s to another year of us, memories, laughter, and endless love 💫💕</h2>
-            <div class="gif-container"><img src="2.gif" alt="Happy"></div>
-            <h2 style="color: #d63384; margin-top: 20px;">Wanna see your new year gift, baby girl? 🎁</h2>
+            <h2>You’re my favorite part of every year, every day, every moment.<br>
+                Thank you for filling my life with love and warmth. ✨</h2>
+            <div class="gif-container">
+                <img src="2.gif" alt="Happy">
+            </div>
+            <h2 style="color: var(--text-color); margin-top: 20px;">Wanna see your new year gift, baby girl? 🎁</h2>
             <button id="giftBtn" onclick="showFinalGift()">YES, SHOW ME! ✨</button>
         </div>
 
         <div id="finalGiftPage" class="hidden">
             <h1 style="font-size: 2em; margin-bottom: 5px;">🌸 For My Baby Girl 🌸</h1>
-            <p style="color: #d63384; font-weight: bold;">Happy New Year 2026!</p>
-            
+            <p style="color: var(--text-color); font-weight: bold;">Happy New Year 2026!</p>
             <div class="video-frame">
                 <video id="giftVideo" controls controlsList="nodownload" disablePictureInPicture>
-                    <source src="gift.mp4" type="video/mp4">
+                    <source src="edit.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
+        </div>
 
-            <h2 style="color: #ff4d6d; margin-top: 10px;"><!-- add poetry here--> </h2>
+        <div id="nextGiftSection" class="hidden">
+            <h1 style="color: var(--primary-pink);">"Every moment with you is a gift..."</h1>
+            <h2 style="font-style: italic; color: #555; margin-bottom: 25px;">
+                Your smile is my favorite 2026 resolution.<br>
+                I have one more surprise waiting for you...
+            </h2>
+            <button id="nextGiftBtn" onclick="window.location.href='enve.html'">Wanna see your next gift? 🎁</button>
         </div>
     </div>
 
     <script>
         let noCount = 0;
-        const phrases = ["No", "Are you sure? \n I know you LOVE ME BUBU", "You're telling a lie! \n YOU LOVE ME", "Think again...", "YOU LOVE ME 😭", "YOU LOVE ME!"];
+        // Edit these phrases that appear when she clicks "No"
+        const phrases = ["No", "Are you sure?", "I know you LOVE ME BUBU", "Think again...", "YOU LOVE ME! 😭"];
         
         function sayNo() {
             noCount++;
             document.getElementById('questionText').innerText = phrases[Math.min(noCount, phrases.length - 1)];
+            // Change 3.gif to your "sad" or "angry" panda gif
             document.getElementById('pandaGif').src = "3.gif";
             const yesBtn = document.getElementById('yesBtn');
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-            yesBtn.style.fontSize = (currentSize * 1.2) + 'px';
-            yesBtn.style.padding = (currentSize * 0.7) + 'px ' + (currentSize * 1.2) + 'px';
+            yesBtn.style.fontSize = (currentSize * 1.2) + 'px'; // Makes Yes button bigger
         }
 
         function startCountdown() {
             document.getElementById('questionSection').classList.add('hidden');
             document.getElementById('countdownSection').classList.remove('hidden');
-            let timeLeft = 5;
+            let timeLeft = 5; // Change countdown time here (in seconds)
             const timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('countdownNumber').innerText = timeLeft;
@@ -205,22 +189,27 @@
         function showFinalGift() {
             document.getElementById('giftAskSection').classList.add('hidden');
             document.getElementById('finalGiftPage').classList.remove('hidden');
-            document.body.style.backgroundColor = "#ffc1d6";
+            document.body.style.backgroundColor = "#ffc1d6"; // Changes BG color for the final part
             createFlowers();
-            // Optional: Auto-play the video
             const video = document.getElementById('giftVideo');
             video.play();
+
+            // This detects when the video finishes
+            video.onended = function() {
+                document.getElementById('finalGiftPage').classList.add('hidden');
+                document.getElementById('nextGiftSection').classList.remove('hidden');
+            };
         }
 
+        // Floating background animation
         function createFlowers() {
-            const flowers = ['🌸', '💖', '🌼', '🌷', '✨', '💕', '😘' , '💋' ];
+            const flowers = ['🌸', '💖', '🌼', '🌷', '✨', '💕', '💋'];
             for (let i = 0; i < 35; i++) {
                 let flower = document.createElement('div');
                 flower.className = 'flower';
                 flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
                 flower.style.left = Math.random() * 100 + 'vw';
                 flower.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                flower.style.fontSize = (Math.random() * 20 + 20) + 'px';
                 document.body.appendChild(flower);
             }
         }
