@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Bubu ❤️</title>
     <style>
-        /* 🎨 EDIT COLORS HERE */
+        /* 🎨 THEME COLORS */
         :root {
             --main-bg: #ffeef8;         /* Background color of the page */
             --card-bg: rgba(255, 255, 255, 0.95); /* Container background */
             --primary-pink: #ff4d6d;    /* Main button & heart color */
             --text-color: #d63384;      /* Heading color */
+            --input-border: #ffb3c1;
         }
 
         body {
@@ -25,6 +26,7 @@
             text-align: center;
             transition: background-color 0.8s;
         }
+
         .container {
             background: var(--card-bg);
             padding: 30px;
@@ -35,12 +37,28 @@
             position: relative;
             z-index: 10;
         }
+
         h1 { color: var(--text-color); margin-bottom: 15px;}
-        .gif-container img { width: 200px; border-radius: 15px; }
-        .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         h2 { color: #000000; margin-bottom: 5px ; font-size: 15px; }
         h3 { color:rgb(0, 0, 0); margin-bottom: 10px; }
         
+        .gif-container img { width: 200px; border-radius: 15px; }
+        .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        
+        /* Styled Inputs */
+        .login-form { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 20px; }
+        input {
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--input-border);
+            width: 80%;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+            color: #555;
+        }
+        input:focus { border-color: var(--primary-pink); box-shadow: 0 0 8px rgba(255, 77, 109, 0.2); }
+
         button {
             padding: 12px 25px;
             font-size: 18px;
@@ -49,8 +67,8 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        /* Buttons Color */
-        #yesBtn, #giftBtn, #nextGiftBtn { background-color: var(--primary-pink); color: white; font-weight: bold; }
+        
+        #yesBtn, #giftBtn, #nextGiftBtn, .enter-btn { background-color: var(--primary-pink); color: white; font-weight: bold; }
         #noBtn { background-color: #6c757d; color: white; }
         .hidden { display: none; }
 
@@ -98,11 +116,28 @@
             0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .shake { animation: shake 0.2s ease-in-out 0s 2; }
     </style>
 </head>
 <body oncontextmenu="return false;"> 
     
-    <div class="container" id="mainContainer">
+    <div class="container" id="loginSection">
+        <h1>Welcome, My Love ❤️</h1>
+        <p style="color: var(--text-color); font-weight: 500;">Please enter your details to enter</p>
+        <div class="login-form">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button class="enter-btn" onclick="checkLogin()">Unlock My Heart ✨</button>
+            <p id="loginError" style="color: #ff4d6d; font-size: 14px; display: none; margin-top: 10px;">Incorrect details. Try again, Bubu! 🥺</p>
+        </div>
+    </div>
+
+    <div class="container hidden" id="mainContainer">
         <div id="questionSection">
             <h1 id="questionText">Do you love me? ❤️</h1>
             <div class="gif-container">
@@ -156,24 +191,40 @@
     </div>
 
     <script>
+        // --- LOGIN LOGIC ---
+        function checkLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const error = document.getElementById('loginError');
+            const loginBox = document.getElementById('loginSection');
+
+            if (user === "savini03" && pass === "savi@290323") {
+                loginBox.classList.add('hidden');
+                document.getElementById('mainContainer').classList.remove('hidden');
+            } else {
+                error.style.display = "block";
+                loginBox.classList.add('shake');
+                setTimeout(() => loginBox.classList.remove('shake'), 400);
+            }
+        }
+
+        // --- EXISTING CONTENT LOGIC ---
         let noCount = 0;
-        // Edit these phrases that appear when she clicks "No"
         const phrases = ["No", "Are you sure?", "I know you LOVE ME BUBU", "Think again...", "YOU LOVE ME! 😭"];
         
         function sayNo() {
             noCount++;
             document.getElementById('questionText').innerText = phrases[Math.min(noCount, phrases.length - 1)];
-            // Change 3.gif to your "sad" or "angry" panda gif
             document.getElementById('pandaGif').src = "3.gif";
             const yesBtn = document.getElementById('yesBtn');
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-            yesBtn.style.fontSize = (currentSize * 1.2) + 'px'; // Makes Yes button bigger
+            yesBtn.style.fontSize = (currentSize * 1.2) + 'px';
         }
 
         function startCountdown() {
             document.getElementById('questionSection').classList.add('hidden');
             document.getElementById('countdownSection').classList.remove('hidden');
-            let timeLeft = 5; // Change countdown time here (in seconds)
+            let timeLeft = 5;
             const timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('countdownNumber').innerText = timeLeft;
@@ -189,19 +240,17 @@
         function showFinalGift() {
             document.getElementById('giftAskSection').classList.add('hidden');
             document.getElementById('finalGiftPage').classList.remove('hidden');
-            document.body.style.backgroundColor = "#ffc1d6"; // Changes BG color for the final part
+            document.body.style.backgroundColor = "#ffc1d6";
             createFlowers();
             const video = document.getElementById('giftVideo');
             video.play();
 
-            // This detects when the video finishes
             video.onended = function() {
                 document.getElementById('finalGiftPage').classList.add('hidden');
                 document.getElementById('nextGiftSection').classList.remove('hidden');
             };
         }
 
-        // Floating background animation
         function createFlowers() {
             const flowers = ['🌸', '💖', '🌼', '🌷', '✨', '💕', '💋'];
             for (let i = 0; i < 35; i++) {
