@@ -198,10 +198,15 @@
             const error = document.getElementById('loginError');
             const loginBox = document.getElementById('loginSection');
 
-            if (user === "savini03" && pass === "savi@290323") {
+            if (user === "Savika" && pass === "Sau@030507") {
                 loginBox.classList.add('hidden');
                 document.getElementById('mainContainer').classList.remove('hidden');
-            } else {
+            } 
+            else if (user === "Vinit" && pass === "savini@03") {
+                loginBox.classList.add('hidden');
+                document.getElementById('mainContainer').classList.remove('hidden');
+            } 
+            else {
                 error.style.display = "block";
                 loginBox.classList.add('shake');
                 setTimeout(() => loginBox.classList.remove('shake'), 400);
